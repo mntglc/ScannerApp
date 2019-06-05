@@ -30,7 +30,8 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
-        this.receivedEvent('deviceready');
+        this.receivedEvent('deviceready');    
+        console.log(navigator.vibrate);
     },
 
     // Update DOM on a Received Event
@@ -44,7 +45,7 @@ var app = {
 
         console.log('Received Event: ' + id);
 
-        this.scanBarCode();
+        // this.scanBarCode();
     },
 
 

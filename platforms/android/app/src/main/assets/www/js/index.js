@@ -30,7 +30,8 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
-        this.receivedEvent('deviceready');
+        this.receivedEvent('deviceready');    
+        console.log(navigator.vibrate);
     },
 
     // Update DOM on a Received Event
@@ -44,13 +45,12 @@ var app = {
 
         console.log('Received Event: ' + id);
 
-        this.scanBarCode();
+        // this.scanBarCode();
     },
 
 
     // ============== barcode plugin ==============
-
-    // BarcodeType	Android	iOS		Windows
+    // formats	    Android	iOS		Windows
     // QR_CODE		✔		✔		✔
     // DATA_MATRIX	✔		✔		✔
     // UPC_A		✔		✔		✔
@@ -85,8 +85,11 @@ var app = {
                 //     "Format: " + result.format + "\n" +
                 //     "Cancelled: " + result.cancelled);
 
-                // if (!cancelled) 
+                if (result.cancelled)
                 {
+                    alert("Operation Cancelled");
+                }
+                else {
                     var barcode = result.text;
                     if (barcode.length == 8) {
                         var alphaNumericRegEx = /[^a-z\d]/i;
@@ -124,7 +127,7 @@ var app = {
                 saveHistory: false, // Android, save scan history (default false)
                 prompt: "Place a barcode inside the scan area", // Android
                 resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-                //formats : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+                //formats : "CODE_128", // default: all but PDF_417 and RSS_EXPANDED
                 orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
                 disableAnimations: true, // iOS
                 disableSuccessBeep: true // iOS and Android
@@ -142,7 +145,7 @@ var app = {
 
     // Vibrate for 2 seconds
     vibrate: function () {
-        navigator.notification.vibrate(2000);
+        navigator.vibrate(2000);
     }
 
 };
