@@ -23,6 +23,6 @@
  ## USED PLUGIN LIST (with installation commands)
   * `cordova plugin add phonegap-plugin-barcodescanner` -- The Barcode Scanner Plugin opens a camera view and automatically scans a barcode, returning the data back to you.
   * `cordova plugin add cordova-plugin-dialogs` -- This plugin provides access to some native dialog UI elements via a global navigator.notification object.
-  <!-- * `cordova plugin add cordova-plugin-vibration` -->
+  * `cordova plugin add cordova-plugin-vibration` -- This plugin provides a way to vibrate the device. 
 
 
