@@ -84,8 +84,11 @@ var app = {
                 //     "Format: " + result.format + "\n" +
                 //     "Cancelled: " + result.cancelled);
 
-                if (!cancelled) 
+                if (result.cancelled)
                 {
+                    alert("Operation Cancelled");
+                }
+                else {
                     var barcode = result.text;
                     if (barcode.length == 8) {
                         var alphaNumericRegEx = /[^a-z\d]/i;
@@ -141,7 +144,7 @@ var app = {
 
     // Vibrate for 2 seconds
     vibrate: function () {
-        navigator.notification.vibrate(2000);
+        navigator.vibrate(2000);
     }
 
 };
