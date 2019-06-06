@@ -17,13 +17,19 @@
  * under the License.
  */
 
-var ScanState = { "OK": 1, "KO": 2, "SCANNING": 3 }
+var ScanState = { 
+    OK: 1, 
+    KO: 2, 
+    SCANNING: 3 
+}
+
 
 var app = {
+
     // Application Constructor
     initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        // document.addEventListener('scanstate', this.onDeviceReady.bind(this), false);
+        
         document.getElementById("buttonScanBarCode").addEventListener("click", this.scanBarCode.bind(this), false);
         document.getElementById("buttonPlayBeep").addEventListener("click", this.playBeep.bind(this), false);
         document.getElementById("buttonVibrate").addEventListener("click", this.vibrate.bind(this), false);
@@ -37,7 +43,6 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
         this.receivedEvent('deviceready');
-        // console.log(navigator.vibrate);
     },
 
     // Update DOM on a Received Event
@@ -72,11 +77,8 @@ var app = {
     // MSI			✖		✖		✔
     // AZTEC		✖		✖		✔
     scanBarCode: function () {
-        
-        navigator.vibrate(500);
-        
         // reset codes
-        this.setBackgroundState(ScanState.SCANNING);
+        this.setState(ScanState.SCANNING);
         document.getElementById('inputOrder').value = '';
         document.getElementById('inputPosition').value = '';
         var self = this;
@@ -120,7 +122,7 @@ var app = {
                 if (isAlphaNumeric) {
                     // order found!
                     document.getElementById('inputOrder').value = "" + barcode;
-                    this.setBackgroundState(ScanState.OK);
+                    this.setState(ScanState.OK);
                     return;
                 }
             } else if (barcode.length == 5) {
@@ -129,25 +131,14 @@ var app = {
                 if (isnumeric) {
                     // position found!
                     document.getElementById('inputPosition').value = "" + barcode;
-                    this.setBackgroundState(ScanState.OK);
+                    this.setState(ScanState.OK);
                     return;
                 }
             }
         }
-
-        // navigator.notification.alert("Message", alertDismissed, "Title", "Ok")
-        // alert("KO");
-
-
-        // KO
-        this.vibrateAndPlay();
-        // this.setBackgroundState(ScanState.KO);
-        // this.playBeep();
-        // this.vibrate().bind(this);
+        this.setState(ScanState.KO);
     },
     // ============== ============== ==============
-
-    // alertDismissed: function(){},
 
 
     // Beep one time
@@ -159,7 +150,7 @@ var app = {
 
     // Vibrate for 2 seconds
     vibrate: function () {
-        navigator.vibrate(1000);
+        navigator.vibrate(2000);
     },
 
     playAndVibrate: function () {
@@ -173,23 +164,31 @@ var app = {
     },
 
 
-    setBackgroundState: function (ScanState) {
+    setState: function (state) {
+        var self = this;
         var body = document.getElementsByTagName("BODY")[0];
-        switch (ScanState) {
-            case ScanState.KO:
-                body.className = "bgColorKO";
-                break;
-            case ScanState.OK:
-                body.className = "bgColorOK";
-                break;
-            case ScanState.SCANNING:
-                body.className = "bgColor";
-                break;
+        setTimeout(() => {
+            switch (state) {
 
-            default:
-                // body.className = "";
-                break;
-        }
+                case ScanState.KO:
+                    self.playBeep();
+                    self.vibrate();
+                    body.className = "bgColorKO";
+                    break;
+
+                case ScanState.OK:
+                    body.className = "bgColorOK";
+                    break;
+
+                case ScanState.SCANNING:
+                    body.className = "bgColor";
+                    break;
+
+                default:
+                    body.className = "bgColor";
+                    break;
+            }
+        }, 100);
     }
 
 };

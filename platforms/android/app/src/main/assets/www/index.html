@@ -35,12 +35,14 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <title>Scanner App</title>        
     </head>
-    <body>
+    <body class="bgColor">
         <div class="app">
-            <h1>Scanne App</h1>
+            <h1>Scanner App</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
+            </div>
+            <div>
                 Order:<br>
                 <input id="inputOrder" type="text" name="order" value="" disabled><br>
                 Position:<br>
@@ -48,6 +50,8 @@
                 <button id="buttonScanBarCode">Scan BarCode</button>
                 <button id="buttonPlayBeep">Play Beep</button>
                 <button id="buttonVibrate">Vibrate</button>
+                <button id="buttonPlayAndVibrate">Play Beep & Vibrate</button>
+                <button id="buttonVibrateAndPlay">Vibrate & Play Beep</button>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>

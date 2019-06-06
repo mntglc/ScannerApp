@@ -16,13 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+var ScanState = { 
+    OK: 1, 
+    KO: 2, 
+    SCANNING: 3 
+}
+
+
 var app = {
+
     // Application Constructor
     initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        
         document.getElementById("buttonScanBarCode").addEventListener("click", this.scanBarCode.bind(this), false);
         document.getElementById("buttonPlayBeep").addEventListener("click", this.playBeep.bind(this), false);
         document.getElementById("buttonVibrate").addEventListener("click", this.vibrate.bind(this), false);
+        document.getElementById("buttonPlayAndVibrate").addEventListener("click", this.playAndVibrate.bind(this), false);
+        document.getElementById("buttonVibrateAndPlay").addEventListener("click", this.vibrateAndPlay.bind(this), false);
     },
 
     // deviceready Event Handler
@@ -30,8 +42,7 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
-        this.receivedEvent('deviceready');    
-        console.log(navigator.vibrate);
+        this.receivedEvent('deviceready');
     },
 
     // Update DOM on a Received Event
@@ -44,8 +55,6 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-
-        // this.scanBarCode();
     },
 
 
@@ -69,52 +78,13 @@ var app = {
     // AZTEC		✖		✖		✔
     scanBarCode: function () {
         // reset codes
+        this.setState(ScanState.SCANNING);
         document.getElementById('inputOrder').value = '';
         document.getElementById('inputPosition').value = '';
+        var self = this;
         cordova.plugins.barcodeScanner.scan(
             function (result) {
-
-                // // Vibrate for 1 second, stop for 1 second ...
-                // // navigator.vibrate([1000, 1000, 3000, 1000, 5000]);
-                // navigator.vibrate(3000);
-
-                // this.playBeep();
-
-                // alert("We got a barcode\n" +
-                //     "Result: " + result.text + "\n" +
-                //     "Format: " + result.format + "\n" +
-                //     "Cancelled: " + result.cancelled);
-
-                if (result.cancelled)
-                {
-                    alert("Operation Cancelled");
-                }
-                else {
-                    var barcode = result.text;
-                    if (barcode.length == 8) {
-                        var alphaNumericRegEx = /[^a-z\d]/i;
-                        var isAlphaNumeric = !(alphaNumericRegEx.test(barcode));
-                        if (isAlphaNumeric) {
-                            // barcode found!
-                            document.getElementById('inputOrder').value = "" + barcode;
-                            return;
-                        }
-                    } else if (barcode.length == 5) {
-                        var numericRegEx = /[^\d]/i;
-                        var isnumeric = !(numericRegEx.test(barcode));
-                        if (isnumeric) {
-                            // position found!
-                            document.getElementById('inputPosition').value = "" + barcode;
-                            return;
-                        }
-                    }
-                }
-
-                alert("We got a wrong barcode\n" +
-                    "Result: " + result.text + "\n" +
-                    "Format: " + result.format + "\n" +
-                    "Cancelled: " + result.cancelled);
-
+                self.scanComplete(result);
             },
             function (error) {
                 alert("Scanning failed: " + error);
@@ -134,7 +104,42 @@ var app = {
             }
         );
     },
+
+    scanComplete: function (result) {
+        // alert("We got a barcode\n" +
+        //     "Result: " + result.text + "\n" +
+        //     "Format: " + result.format + "\n" +
+        //     "Cancelled: " + result.cancelled);
+        if (result.cancelled) {
+            alert("Operation Cancelled");
+            return;
+        }
+        else {
+            var barcode = result.text;
+            if (barcode.length == 8) {
+                var alphaNumericRegEx = /[^a-z\d]/i;
+                var isAlphaNumeric = !(alphaNumericRegEx.test(barcode));
+                if (isAlphaNumeric) {
+                    // order found!
+                    document.getElementById('inputOrder').value = "" + barcode;
+                    this.setState(ScanState.OK);
+                    return;
+                }
+            } else if (barcode.length == 5) {
+                var numericRegEx = /[^\d]/i;
+                var isnumeric = !(numericRegEx.test(barcode));
+                if (isnumeric) {
+                    // position found!
+                    document.getElementById('inputPosition').value = "" + barcode;
+                    this.setState(ScanState.OK);
+                    return;
+                }
+            }
+        }
+        this.setState(ScanState.KO);
+    },
     // ============== ============== ==============
+
 
     // Beep one time
     playBeep: function () {
@@ -146,6 +151,44 @@ var app = {
     // Vibrate for 2 seconds
     vibrate: function () {
         navigator.vibrate(2000);
+    },
+
+    playAndVibrate: function () {
+        this.playBeep();
+        this.vibrate();
+    },
+
+    vibrateAndPlay: function () {
+        this.vibrate();
+        this.playBeep();
+    },
+
+
+    setState: function (state) {
+        var self = this;
+        var body = document.getElementsByTagName("BODY")[0];
+        setTimeout(() => {
+            switch (state) {
+
+                case ScanState.KO:
+                    self.playBeep();
+                    self.vibrate();
+                    body.className = "bgColorKO";
+                    break;
+
+                case ScanState.OK:
+                    body.className = "bgColorOK";
+                    break;
+
+                case ScanState.SCANNING:
+                    body.className = "bgColor";
+                    break;
+
+                default:
+                    body.className = "bgColor";
+                    break;
+            }
+        }, 100);
     }
 
 };
