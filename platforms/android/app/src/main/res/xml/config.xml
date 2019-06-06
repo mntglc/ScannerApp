@@ -10,7 +10,7 @@
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
-    <name>HelloCordova</name>
+    <name>ScannerApp</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>

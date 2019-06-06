@@ -16,7 +16,7 @@
   * `cordova platform add <PLATFORMNAME>` - add a platform to a project
   * `cordova prepare <PLATFORMNAME>`
   * `cordova compile <PLATFORMNAME>`
-  * `cordova build <PLATFORMNAME>` -- prepare + compile
+  * `cordova build <PLATFORMNAME>` -- prepare + compile [--verbose] [--release]
   * `cordova run <PLATFORMNAME>`
   * `cordova run <PLATFORMNAME> --device` -- run on connected device  
 
@@ -24,5 +24,3 @@
   * `cordova plugin add phonegap-plugin-barcodescanner` -- The Barcode Scanner Plugin opens a camera view and automatically scans a barcode, returning the data back to you.
   * `cordova plugin add cordova-plugin-dialogs` -- This plugin provides access to some native dialog UI elements via a global navigator.notification object.
   * `cordova plugin add cordova-plugin-vibration` -- This plugin provides a way to vibrate the device. 
-
-
