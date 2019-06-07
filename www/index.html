@@ -38,24 +38,32 @@
     <title>Scanner App</title>
 </head>
 
-<body class="bgColor">
-    <div class="app">
-        <h1>Scanner App</h1>
-        <div id="deviceready" class="blink">
+<body class="backgroundcolor">
+    <!-- <div class="app "> -->
+        <div class="header">
+            <h1>Scanner App</h1>
+        </div>
+        <!-- <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>
+        </div> -->
+        <div class="content">
+            <p>Order:</p>
+            <input id="inputOrder" type="text" name="order" value="" disabled>
+            <p>Position:</p>
+            <input id="inputPosition" type="text" name="position" value="" disabled>
+            <!-- <audio id="audio">
+                <source src="sound/notify.ogg" type="audio/ogg">
+                    <source src="sound/notify.mp3" type="audio/mpeg">
+                        <source src="sound/notify.wav" type="audio/wav"></audio> -->
         </div>
-        <div>
-            Order:<br>
-            <input id="inputOrder" type="text" name="order" value="" disabled><br>
-            Position:<br>
-            <input id="inputPosition" type="text" name="position" value="" disabled><br><br>
-            <button id="buttonScanBarCode">Scan BarCode</button><br>
-            <button id="buttonVibrate">[DEBUG] Vibrate</button><br>
-            <button id="buttonBeep">[DEBUG] Beep</button><br>
-            <audio id="audio"><source src="sound/notify.ogg" type="audio/ogg"><source src="sound/notify.mp3" type="audio/mpeg"><source src="sound/notify.wav" type="audio/wav"></audio>
+        <div class="footer">
+            <button id="buttonScanBarCode" class="button">Scan BarCode</button><br>
+            <button id="buttonVibrate" class="button">[DEBUG] Vibrate</button><br>
+            <button id="buttonBeep" class="button">[DEBUG] Beep</button><br>
         </div>
-    </div>
+
+    <!-- </div> -->
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>

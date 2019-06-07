@@ -20,7 +20,8 @@
 var ScanState = {
     OK: 1,
     KO: 2,
-    SCANNING: 3
+    SCANNING: 3,
+    CANCELLED: 4,
 }
 
 
@@ -28,66 +29,45 @@ var app = {
 
     // Application Constructor
     initialize: function () {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-
         document.getElementById("buttonScanBarCode").addEventListener("click", this.scanBarCode.bind(this), false);
         document.getElementById("buttonVibrate").addEventListener("click", this.vibrate.bind(this), false);
         document.getElementById("buttonBeep").addEventListener("click", this.playBeep.bind(this), false);
     },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function () {
-        this.receivedEvent('deviceready');
-    },
-
-    // Update DOM on a Received Event
-    receivedEvent: function (id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    },
 
 
-    // ============== barcode plugin ==============
-    // formats	    Android	iOS		Windows
-    // QR_CODE		✔		✔		✔
-    // DATA_MATRIX	✔		✔		✔
-    // UPC_A		✔		✔		✔
-    // UPC_E		✔		✔		✔
-    // EAN_8		✔		✔		✔
-    // EAN_13		✔		✔		✔
-    // CODE_39		✔		✔		✔
-    // CODE_93		✔		✖		✔
-    // CODE_128	    ✔		✔		✔
-    // CODABAR		✔		✖		✔
-    // ITF			✔		✔		✔
-    // RSS14		✔		✖		✔
-    // PDF_417		✔		✔		✔
-    // RSS_EXPANDED ✔		✖		✖
-    // MSI			✖		✖		✔
-    // AZTEC		✖		✖		✔
+    
     scanBarCode: function () {
-        // reset codes
         this.setState(ScanState.SCANNING);
-        document.getElementById('inputOrder').value = '';
-        document.getElementById('inputPosition').value = '';
         var self = this;
         cordova.plugins.barcodeScanner.scan(
             function (result) {
-                self.scanComplete(result);
+                setTimeout(() => {
+                    self.scanComplete(result);
+                }, 200);
             },
             function (error) {
                 alert("Scanning failed: " + error);
             },
             {
+                // formats	    Android	iOS		Windows
+                // QR_CODE		✔		✔		✔
+                // DATA_MATRIX	✔		✔		✔
+                // UPC_A		✔		✔		✔
+                // UPC_E		✔		✔		✔
+                // EAN_8		✔		✔		✔
+                // EAN_13		✔		✔		✔
+                // CODE_39		✔		✔		✔
+                // CODE_93		✔		✖		✔
+                // CODE_128	    ✔		✔		✔
+                // CODABAR		✔		✖		✔
+                // ITF			✔		✔		✔
+                // RSS14		✔		✖		✔
+                // PDF_417		✔		✔		✔
+                // RSS_EXPANDED ✔		✖		✖
+                // MSI			✖		✖		✔
+                // AZTEC		✖		✖		✔
+
                 preferFrontCamera: false, // iOS and Android
                 showFlipCameraButton: false, // iOS and Android
                 showTorchButton: false, // iOS and Android
@@ -104,13 +84,12 @@ var app = {
     },
 
     scanComplete: function (result) {
-        // result == { 
+        //  result properties:
         //     text: string
         //     format: string
         //     cancelled: bool
-        // }
         if (result.cancelled) {
-            // alert("Operation Cancelled");
+            this.setState(ScanState.CANCELLED);
             return;
         }
         else {
@@ -119,25 +98,26 @@ var app = {
                 var alphaNumericRegEx = /[^a-z\d]/i;
                 var isAlphaNumeric = !(alphaNumericRegEx.test(barcode));
                 if (isAlphaNumeric) {
-                    // order found!
+                    // the barcode is an order
                     document.getElementById('inputOrder').value = "" + barcode;
                     this.setState(ScanState.OK);
                     return;
                 }
-            } else if (barcode.length == 5) {
+            }
+            else if (barcode.length == 5) {
                 var numericRegEx = /[^\d]/i;
-                var isnumeric = !(numericRegEx.test(barcode));
-                if (isnumeric) {
-                    // position found!
+                var isNumeric = !(numericRegEx.test(barcode));
+                if (isNumeric) {
+                    // the barcode is a position
                     document.getElementById('inputPosition').value = "" + barcode;
                     this.setState(ScanState.OK);
                     return;
                 }
             }
         }
+        // the barcode is not an order or a position
         this.setState(ScanState.KO);
     },
-    // ============== ============== ==============
 
 
     playBeep: function () {
@@ -147,56 +127,58 @@ var app = {
         // tone synthesizer
         var duration = 1000;    // [1, 5000] ms
         var frequency = 300;    // [40, 6000] Hz
-        var volume = 60;       // [1, 100]
-        var type = 1;       // [0:sine, 1:square, 2:sawtooth, 3:triangle]
+        var volume = 60;        // [1, 100]
+        var type = "square";           // [0:sine, 1:square, 2:sawtooth, 3:triangle]
         var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
         var oscillator = audioCtx.createOscillator();
         var gainNode = audioCtx.createGain();
-
         oscillator.connect(gainNode);
         gainNode.connect(audioCtx.destination);
-
         gainNode.gain.value = volume;
         oscillator.frequency.value = frequency;
         oscillator.type = type;
-
         oscillator.start();
         setTimeout(function () {
             oscillator.stop();
         }, duration);
     },
 
+
     vibrate: function () {
-        navigator.vibrate([1000]);
+        navigator.vibrate([200, 100, 200, 100, 1000]);
     },
+
 
     setState: function (state) {
         var self = this;
         var body = document.getElementsByTagName("BODY")[0];
-        setTimeout(() => {
-            switch (state) {
+        switch (state) {
+            case ScanState.KO:
+                self.playBeep();
+                self.vibrate();
+                body.className = "backgroundcolorKO";
+                break;
 
-                case ScanState.KO:
-                    self.playBeep();
-                    self.vibrate();
-                    body.className = "bgColorKO";
-                    break;
+            case ScanState.OK:
+                body.className = "backgroundcolorOK";
+                break;
 
-                case ScanState.OK:
-                    body.className = "bgColorOK";
-                    break;
+            case ScanState.SCANNING:
+                document.getElementById('inputOrder').value = '';
+                document.getElementById('inputPosition').value = '';
+                body.className = "backgroundcolor";
+                break;
 
-                case ScanState.SCANNING:
-                    body.className = "bgColor";
-                    break;
+            case ScanState.CANCELLED:
+                body.className = "backgroundcolor";
+                break;
 
-                default:
-                    body.className = "bgColor";
-                    break;
-            }
-        }, 100);
+            default:
+                body.className = "backgroundcolor";
+                break;
+        }
     }
+
 };
 
 app.initialize();
