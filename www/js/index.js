@@ -30,8 +30,6 @@ var app = {
     // Application Constructor
     initialize: function () {
         document.getElementById("buttonScanBarCode").addEventListener("click", this.scanBarCode.bind(this), false);
-        document.getElementById("buttonVibrate").addEventListener("click", this.vibrate.bind(this), false);
-        document.getElementById("buttonBeep").addEventListener("click", this.playBeep.bind(this), false);
     },
 
 
