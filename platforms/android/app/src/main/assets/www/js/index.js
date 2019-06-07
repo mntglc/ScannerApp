@@ -30,13 +30,11 @@ var app = {
     // Application Constructor
     initialize: function () {
         document.getElementById("buttonScanBarCode").addEventListener("click", this.scanBarCode.bind(this), false);
-        document.getElementById("buttonVibrate").addEventListener("click", this.vibrate.bind(this), false);
-        document.getElementById("buttonBeep").addEventListener("click", this.playBeep.bind(this), false);
     },
 
 
 
-    
+
     scanBarCode: function () {
         this.setState(ScanState.SCANNING);
         var self = this;
@@ -145,7 +143,7 @@ var app = {
 
 
     vibrate: function () {
-        navigator.vibrate([200, 100, 200, 100, 1000]);
+        navigator.vibrate([1000]);
     },
 
 
