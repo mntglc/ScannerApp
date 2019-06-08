@@ -1,4 +1,4 @@
-## ScannerApp
+## SCANNER APP
   This mobile `Android` application is able to do the following:
   *  A barcode for an order and for a position is scanned by a device camera.
   *  An order is exactly 8 digits long and may consist of numeric and alphanumeric values.
@@ -8,21 +8,19 @@
   *  In case of a faulty scan there should be an acoustic warning signal.
   *  If the scan is faulty, there should be a haptic warning signal (vibration).
 
-## RUN PROJECT
-  * Clone the repository on your PC and run `cordova run android --device`. Otherwise execute the `apk` inside the root folder
+  This project has been created with mobile application development framework `Apache Cordova`.
+  I used a cordova plugin to read barcodes with device camera, make a vibration and an window.AudioContext object for managing and playing sound.
 
-## USEFUL COMMAND LIST
-  * `npm install -g cordova` - install cordova
-  * `cordova create <APPNAME>` - generate a project
-  * `cordova platform ls` - list all available platforms
-  * `cordova platform add <PLATFORMNAME>` - add a platform to a project
-  * `cordova prepare <PLATFORMNAME>`
-  * `cordova compile <PLATFORMNAME>`
-  * `cordova build <PLATFORMNAME>` -- prepare + compile [--verbose] [--release]
-  * `cordova run <PLATFORMNAME>`
-  * `cordova run <PLATFORMNAME> --device` -- run on connected device  
+## USEFUL COMMAND PROMT LIST
+  * `npm install -g cordova` - Cordova command-line runs on Node.js and is available on NPM
+  * `cordova create <path>` - Create a blank Cordova project
+  * `cordova platform add <platform name>` - Add a platform for which you want to build your app
+  * `cordova plugin add <plugin name>` - Add a plugin to your app
+  * `cordova run <platform name>` - Run your app
+  * `cordova build <platform name>` - Build your app
+  * `cordova run <platform name> --device` - Run your app on your device  
 
- ## PLUGINS
-  * `phonegap-plugin-barcodescanner` -- The Barcode Scanner Plugin opens a camera view and automatically scans a barcode, returning the data back to you.
-  * `cordova-plugin-dialogs` -- This plugin provides access to some native dialog UI elements via a global navigator.notification object.
-  * `cordova-plugin-vibration` -- This plugin provides a way to vibrate the device. 
+ ## INSTALLED PLUGINS
+  * `phonegap-plugin-barcodescanner` - The Barcode Scanner Plugin opens a camera view and automatically scans a barcode, returning the data back to you.
+  * `cordova-plugin-dialogs` - This plugin provides access to some native dialog UI elements via a global navigator.notification object.
+  * `cordova-plugin-vibration` - This plugin provides a way to vibrate the device. 
