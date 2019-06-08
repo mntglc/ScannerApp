@@ -8,7 +8,7 @@
   *  In case of a faulty scan there should be an acoustic warning signal.
   *  If the scan is faulty, there should be a haptic warning signal (vibration).
 
-  This project has been created with mobile application development framework `Apache Cordova`. I used a cordova plugin to read barcodes with device camera, make a vibration and an AudioContext object for managing and playing sound.
+  This project has been created with mobile application development framework `Apache Cordova`. Uses a plugin to read barcodes with device camera, manage device vibration and an AudioContext object for managing and playing sound.
 
 ## USEFUL COMMAND PROMT LIST
   * `npm install -g cordova` - Cordova command-line runs on Node.js and is available on NPM
