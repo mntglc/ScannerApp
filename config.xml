@@ -4,7 +4,6 @@
     xmlns="http://www.w3.org/ns/widgets" 
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
-    <!-- short="Scnr" -->
     <name>Scanner App</name>
     <description>
         A sample Apache Cordova application that read barcodes and check if is an ORDER (8 alphanumeric digits) or a POSITION (5 numeric characters)
