@@ -10,7 +10,7 @@
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
-    <name>ScannerApp</name>
+    <name>Scanner App</name>
     <description>
         A sample Apache Cordova application that read barcodes and check if is an ORDER (8 alphanumeric digits) or a POSITION (5 numeric characters)
     </description>
@@ -26,5 +26,33 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
+    <hook src="scripts/afterBuild.js" type="after_build" />
+    <hook src="scripts/afterRun.js" type="after_run" />
+    <icon density="ldpi" src="www\assets\logo.png" />
+    <icon density="mdpi" src="www\assets\logo.png" />
+    <icon density="hdpi" src="www\assets\logo.png" />
+    <icon density="xhdpi" src="www\assets\logo.png" />
+    <splash density="land-hdpi" src="www\assets\logo.png" />
+    <splash density="land-ldpi" src="www\assets\logo.png" />
+    <splash density="land-mdpi" src="www\assets\logo.png" />
+    <splash density="land-xhdpi" src="www\assets\logo.png" />
+    <splash density="port-hdpi" src="www\assets\logo.png" />
+    <splash density="port-ldpi" src="www\assets\logo.png" />
+    <splash density="port-mdpi" src="www\assets\logo.png" />
+    <splash density="port-xhdpi" src="www\assets\logo.png" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="KeepRunning" value="false" />
+    <preference name="LoadUrlTimeoutValue" value="10000" />
+    <preference name="InAppBrowserStorageEnabled" value="false" />
+    <preference name="LoadingDialog" value="Scann App. Loading..." />
+    <preference name="ErrorUrl" value="error.html" />
+    <preference name="ShowTitle" value="false" />
+    <preference name="LogLevel" value="VERBOSE" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
+    <preference name="DefaultVolumeStream" value="call" />
+    <preference name="OverrideUserAgent" value="Mozilla/5.0 My Browser" />
+    <preference name="AppendUserAgent" value="My Browser" />
+    <preference name="Fullscreen" value="true" />
+    <preference name="WebViewBounce" value="true" />
+    <preference name="Orientation" value="portrait" />
 </widget>

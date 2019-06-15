@@ -20,6 +20,7 @@
   * `cordova run <platform name> --device` - Run your app on your device  
 
  ## INSTALLED PLUGINS
+  * `cordova-plugin-whitelist` - This plugin implements a whitelist policy for navigating the application webview on Cordova 4.0
   * `phonegap-plugin-barcodescanner` - The Barcode Scanner Plugin opens a camera view and automatically scans a barcode, returning the data back to you.
   * `cordova-plugin-dialogs` - This plugin provides access to some native dialog UI elements via a global navigator.notification object.
   * `cordova-plugin-vibration` - This plugin provides a way to vibrate the device. 

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ScannerApp</string>
-    <string name="launcher_name">@string/app_name</string>
+    <string name="app_name">Scanner App</string>
+    <string name="launcher_name">Scnr</string>
     <string name="activity_name">@string/launcher_name</string>
 </resources>

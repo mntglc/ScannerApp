@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.scanapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>ScannerApp</name>
+
+<widget id="io.cordova.scanapp" version="1.0.0" 
+    xmlns="http://www.w3.org/ns/widgets" 
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+    <!-- short="Scnr" -->
+    <name>Scanner App</name>
     <description>
         A sample Apache Cordova application that read barcodes and check if is an ORDER (8 alphanumeric digits) or a POSITION (5 numeric characters)
     </description>
@@ -9,15 +14,54 @@
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <!-- external domains the app is allowed to communicate with: app is allowed to communicate with -->
     <access origin="*" />
+    <!-- Allow links to web pages to open in a browser -->
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <!-- Allow tel: links to open the dialer -->
     <allow-intent href="tel:*" />
+    <!-- Allow SMS links to open messaging app -->
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
+    <!-- Allow geo: links to open maps -->
     <allow-intent href="geo:*" />
+
     <platform name="android">
         <allow-intent href="market:*" />
+        <!-- hook definition -->
+        <hook type="after_build" src="scripts/afterBuild.js" />
+        <hook type="after_run" src="scripts/afterRun.js" />
+        <!-- icon -->
+        <icon src="www\assets\logo.png" density="ldpi" />
+        <icon src="www\assets\logo.png" density="mdpi" />
+        <icon src="www\assets\logo.png" density="hdpi" />
+        <icon src="www\assets\logo.png" density="xhdpi" />
+        <!-- you can use any density that exists in the Android project -->
+        <splash src="www\assets\logo.png" density="land-hdpi"/>
+        <splash src="www\assets\logo.png" density="land-ldpi"/>
+        <splash src="www\assets\logo.png" density="land-mdpi"/>
+        <splash src="www\assets\logo.png" density="land-xhdpi"/>
+        <splash src="www\assets\logo.png" density="port-hdpi"/>
+        <splash src="www\assets\logo.png" density="port-ldpi"/>
+        <splash src="www\assets\logo.png" density="port-mdpi"/>
+        <splash src="www\assets\logo.png" density="port-xhdpi"/>
+        <!-- Android only preferences -->
+        <preference name="KeepRunning" value="false"/>
+        <preference name="LoadUrlTimeoutValue" value="10000"/>
+        <preference name="InAppBrowserStorageEnabled" value="false"/>
+        <preference name="LoadingDialog" value="Scann App. Loading..."/>
+        <preference name="ErrorUrl" value="error.html"/>
+        <preference name="ShowTitle" value="false"/>
+        <preference name="LogLevel" value="VERBOSE"/>
+        <preference name="AndroidLaunchMode" value="singleTop"/>
+        <preference name="DefaultVolumeStream" value="call" />
+        <preference name="OverrideUserAgent" value="Mozilla/5.0 My Browser" />
+        <preference name="AppendUserAgent" value="My Browser" />
+
+        <preference name="Fullscreen" value="true" />
+        <preference name="WebViewBounce" value="true" />
+        <preference name="Orientation" value="portrait" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

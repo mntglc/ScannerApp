@@ -154,24 +154,43 @@ var app = {
             case ScanState.KO:
                 self.playBeep();
                 self.vibrate();
+                // document.getElementById("image-result-ok").style.visibility = "hidden";
+                // document.getElementById("image-result-ko").style.visibility = "visible";
+                // document.getElementById("image-logo").style.visibility = "hidden";
+                document.getElementById("image-logo").src="assets/ko.png";
                 body.className = "backgroundcolorKO";
                 break;
 
             case ScanState.OK:
+                // document.getElementById("image-result-ok").style.visibility = "visible";
+                // document.getElementById("image-result-ko").style.visibility = "hidden";
+                // document.getElementById("image-logo").style.visibility = "hidden";
+                document.getElementById("image-logo").src="assets/ok.png";
                 body.className = "backgroundcolorOK";
                 break;
 
             case ScanState.SCANNING:
+                // document.getElementById("image-result-ok").style.visibility = "hidden";
+                // document.getElementById("image-result-ko").style.visibility = "hidden";
+                // document.getElementById("image-logo").style.visibility = "hidden";
+                // document.getElementById("image-logo").src="../assets/logo.png";
+
                 document.getElementById('inputOrder').value = '';
                 document.getElementById('inputPosition').value = '';
                 body.className = "backgroundcolor";
                 break;
 
             case ScanState.CANCELLED:
+                // document.getElementById("image-result-ok").style.visibility = "hidden";
+                // document.getElementById("image-result-ko").style.visibility = "hidden";
+                // document.getElementById("image-logo").style.visibility = "visible";
+                document.getElementById("image-logo").src="assets/logo.png";
+
                 body.className = "backgroundcolor";
                 break;
 
             default:
+                // document.getElementById("image-result").src="../assets/logo.png";
                 body.className = "backgroundcolor";
                 break;
         }
